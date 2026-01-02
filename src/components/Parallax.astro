@@ -1,0 +1,164 @@
+---
+// import astroLogo from '../assets/astro.svg';
+import background from '../assets/background.svg';
+import petal1 from '../assets/petal1.png';
+import petal2 from '../assets/petal2.png';
+---
+
+<div id="container">
+	<img id="background" src={background.src} alt="" fetchpriority="high" />
+	<main>
+		<div 
+			class="parallax -confetti-1" 
+			style={`--scroll-adjustment: 0.3; --bg-img: url(${petal1.src});`}
+		></div>
+	  
+		<div 
+			class="parallax -confetti-2" 
+			style={`--scroll-adjustment: 0.7; --bg-img: url(${petal2.src});`}
+		></div>
+
+		<section class="section">
+			<h2>
+				無限紙吹雪
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション2
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション3
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション4
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション5
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション6
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション7
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション8
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション9
+			</h2>
+		</section>
+		<section class="section">
+			<h2>
+				セクション10
+			</h2>
+		</section>
+	</main>
+
+</div>
+
+<style lang="scss">
+	
+	#background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+		filter: blur(100px);
+	}
+
+	#container {
+		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+		height: 100%;
+	}
+
+	main {
+		min-height: 500vh;
+	}
+	.section {
+		// border: 1px solid red;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-sizing: border-box;
+		padding: 3rem;
+	}
+	h2 {
+		width: 100%;
+		height: 100%;
+		background-color: rgba($color: white, $alpha: 0.5);
+		z-index: 10;
+		position: relative;
+		font-size: 80px;
+		color: pink;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.parallax {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-position: 0 0;
+		background-repeat: repeat;
+		pointer-events: none; // 前面にあってもクリック等を阻害しないように設定
+		background-image: var(--bg-img); // ここで受け取る
+
+    &.-confetti-1 {
+      // 奥の小さい紙吹雪
+      z-index: 0;
+      // Astroのpublicフォルダにある場合、画像は / から指定
+	  // background-image: url('/petal1.png');
+      background-size: 100% auto;
+    }
+
+    &.-confetti-2 {
+      // 手前のピンクの紙吹雪
+      z-index: 1;
+    //   background-image: url('/petal2.png');
+      background-size: 100% auto;
+    }
+  }
+</style>
+
+<script>
+// Astroではscriptタグ内にJSを書く
+window.addEventListener('scroll', function() {
+	const blocks = document.querySelectorAll<HTMLElement>('.parallax'); // TypeScript対応のため型を指定する
+	
+	blocks.forEach(function(block) {
+	const scrollTop = window.scrollY;
+	
+	// CSS変数の値を取得
+	const adjustment = getComputedStyle(block).getPropertyValue('--scroll-adjustment');
+	
+	// 計算
+	const scrollAdjustedValue = scrollTop * parseFloat(adjustment);
+	
+	// blockへのスタイル適用はこのループの中で行う必要がある
+	block.style.backgroundPositionY = scrollAdjustedValue + 'px';
+	});
+});
+</script>
